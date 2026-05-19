@@ -265,7 +265,7 @@
       background: white;
       border-radius: 1.5rem;
       width: 100%;
-      max-height: 92vh;
+      max-height: 92dvh;
       overflow-y: auto;
       position: relative;
       transform: scale(0.96);
@@ -297,7 +297,7 @@
       border-radius: 0.85rem;
       background: #FAFAF7;
       font-family: 'Geist', system-ui, sans-serif;
-      font-size: 0.9375rem;
+      font-size: 1rem;
       color: #0A0A0A;
       transition: border-color 0.2s ease, background 0.2s ease;
       appearance: none;
@@ -420,9 +420,49 @@
           </div>
         </div>
 
-        <!-- RIGHT: device composition (browser + phone overlap) -->
+        <!-- RIGHT: device composition (phone on mobile / browser+phone overlap on desktop) -->
         <div class="lg:col-span-5 fade-in">
-          <div class="relative">
+
+          <!-- MOBILE: standalone phone (centered, hidden on desktop) -->
+          <div class="lg:hidden flex justify-center">
+            <div class="relative w-[220px] tilt" style="aspect-ratio: 9 / 19.5;">
+              <div class="absolute -inset-4 rounded-[2.8rem] opacity-60 pointer-events-none"
+                   style="background: radial-gradient(circle, rgba(200,162,75,0.35), rgba(217,242,107,0.2), transparent 70%); filter: blur(24px);"></div>
+              <div class="relative w-full h-full rounded-[2.4rem] bg-ink dark:bg-paper p-[5px] shadow-[0_30px_60px_-20px_rgba(10,10,10,0.4)]">
+                <div class="relative w-full h-full rounded-[2.1rem] overflow-hidden bg-gradient-to-br from-orange-100 via-amber-50 to-rose-100 dark:from-amber-900/40 dark:via-orange-900/30 dark:to-rose-900/30">
+                  <div class="absolute top-2.5 left-3.5 right-3.5 flex justify-between items-center text-[9px] mono opacity-70 z-10">
+                    <span>9:41</span>
+                    <span class="flex items-center gap-0.5">
+                      <span class="w-1 h-1 bg-current rounded-full"></span>
+                      <span class="w-1 h-1 bg-current rounded-full opacity-70"></span>
+                      <span class="w-2 h-1 bg-current rounded-sm opacity-80 ml-0.5"></span>
+                    </span>
+                  </div>
+                  <div class="absolute top-1.5 left-1/2 -translate-x-1/2 w-16 h-4 bg-ink dark:bg-ink rounded-full z-20"></div>
+                  <div class="absolute inset-x-4 top-11 bottom-4 flex flex-col">
+                    <div class="flex items-baseline justify-between mb-0.5">
+                      <span class="display text-base leading-none">Bella Roma</span>
+                      <span class="mono text-[7px] opacity-60 tracking-widest">OPEN</span>
+                    </div>
+                    <div class="mono text-[7px] opacity-50 tracking-widest mb-2">EST. 1998</div>
+                    <div class="display text-[1.35rem] leading-[0.92] mb-3">
+                      Wood-fired<br>pizza.
+                    </div>
+                    <div class="flex-1 rounded-md bg-gradient-to-br from-orange-300 via-amber-200 to-rose-200 dark:from-amber-900/60 dark:via-orange-900/50 dark:to-rose-900/50 relative">
+                      <div class="absolute bottom-1 left-2 mono text-[7px] text-ink/60">menu</div>
+                    </div>
+                    <div class="h-8 mt-2 rounded-full bg-ink text-paper flex items-center justify-center gap-1 text-[10px] font-medium">
+                      Order
+                      <svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- DESKTOP: browser + phone overlay composition (hidden on mobile) -->
+          <div class="relative hidden lg:block">
 
             <!-- Soft ambient glow behind composition -->
             <div class="absolute -inset-10 rounded-[3rem] opacity-50 pointer-events-none"
@@ -453,8 +493,8 @@
               </div>
             </div>
 
-            <!-- Phone overlapping bottom-left of browser -->
-            <div class="hidden lg:block absolute -left-10 xl:-left-16 -bottom-10 z-20 tilt"
+            <!-- Phone overlapping bottom-left of browser (desktop overlay) -->
+            <div class="absolute -left-10 xl:-left-16 -bottom-10 z-20 tilt"
                  style="width: 150px; aspect-ratio: 9 / 19.5;">
               <div class="absolute -inset-3 rounded-[2.5rem] opacity-50 pointer-events-none"
                    style="background: radial-gradient(circle, rgba(10,10,10,0.25), transparent 70%); filter: blur(14px);"></div>
@@ -498,8 +538,8 @@
   </section>
 
   <!-- ===================== SCROLL REEL (Three.js video scrub) ===================== -->
-  <section id="scroll-reel" class="relative" style="height: 180vh;">
-    <div class="sticky top-0 h-screen overflow-hidden flex items-center justify-center">
+  <section id="scroll-reel" class="relative" style="height: 180dvh;">
+    <div class="sticky top-0 h-[100dvh] overflow-hidden flex items-center justify-center">
 
       <!-- Clean gradient background -->
       <div class="absolute inset-0 bg-gradient-to-br from-lime/30 via-paper to-accent/20 dark:from-accentAlt/30 dark:via-ink dark:to-lime/10"></div>
@@ -676,7 +716,7 @@
             <li class="price-feature"><svg class="w-4 h-4 text-lime dark:text-accentAlt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Everything in Starter</li>
             <li class="price-feature"><svg class="w-4 h-4 text-lime dark:text-accentAlt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> 5&ndash;7 page custom site</li>
             <li class="price-feature"><svg class="w-4 h-4 text-lime dark:text-accentAlt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> AI chatbot trained on your biz</li>
-            <li class="price-feature"><svg class="w-4 h-4 text-lime dark:text-accentAlt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Bilingual toggle (EN / 中文)</li>
+            <li class="price-feature"><svg class="w-4 h-4 text-lime dark:text-accentAlt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Bilingual toggle</li>
             <li class="price-feature"><svg class="w-4 h-4 text-lime dark:text-accentAlt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Stripe / Square / Alipay / WeChat</li>
             <li class="price-feature"><svg class="w-4 h-4 text-lime dark:text-accentAlt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Quarterly photo refresh</li>
             <li class="price-feature"><svg class="w-4 h-4 text-lime dark:text-accentAlt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Client dashboard access</li>
@@ -705,7 +745,7 @@
           <ul class="space-y-3 mb-8 flex-1">
             <li class="price-feature"><svg class="w-4 h-4 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Everything in Starter</li>
             <li class="price-feature"><svg class="w-4 h-4 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Multi-page expanded site</li>
-            <li class="price-feature"><svg class="w-4 h-4 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Bilingual content (EN / 中文)</li>
+            <li class="price-feature"><svg class="w-4 h-4 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Bilingual content</li>
             <li class="price-feature"><svg class="w-4 h-4 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Cross-border payment setup</li>
             <li class="price-feature"><svg class="w-4 h-4 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Industry-tuned design vibe</li>
             <li class="price-feature"><svg class="w-4 h-4 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> 4 small edits per month</li>
@@ -735,7 +775,7 @@
       <!-- À la carte -->
       <div class="mt-16 max-w-6xl mx-auto fade-in">
         <div class="mono text-xs uppercase tracking-widest opacity-60 mb-6 text-center">À la carte — one-time</div>
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div class="card rounded-2xl p-6">
             <div class="display text-2xl mb-1">$250</div>
             <div class="text-sm opacity-70">Logo / brand refresh</div>
@@ -747,10 +787,6 @@
           <div class="card rounded-2xl p-6">
             <div class="display text-2xl mb-1">$250</div>
             <div class="text-sm opacity-70">Migration from old site</div>
-          </div>
-          <div class="card rounded-2xl p-6">
-            <div class="display text-2xl mb-1">Free</div>
-            <div class="text-sm opacity-70">LLC / banking referrals</div>
           </div>
         </div>
       </div>
@@ -868,7 +904,7 @@
     <div class="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[900px] mesh opacity-80"></div>
     <div class="relative max-w-[1100px] mx-auto px-6 lg:px-12 text-center">
       <div class="badge mb-6 inline-flex fade-in">05 / Let's go</div>
-      <h2 class="display text-[clamp(2.5rem,8vw,7rem)] leading-[0.95] tracking-[-0.04em] fade-in">
+      <h2 class="display text-[clamp(1.75rem,7vw,7rem)] leading-[0.95] tracking-[-0.04em] fade-in">
         Stop duct-taping<br>
         <span class="italic opacity-80">your tech stack.</span>
       </h2>
