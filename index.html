@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reedhaus — Websites &amp; Tech, Handled.</title>
+  <meta name="description" content="We build modern websites and run the tech for local businesses. One team for your site, Google presence, payments, and analytics. Flat monthly pricing.">
+  <meta name="theme-color" content="#0A0A0A">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="apple-touch-icon" href="assets/favicon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Reedhaus — Websites &amp; Tech, Handled.">
+  <meta property="og:description" content="The outsourced tech team for businesses that don't have one. Site, Google, payments, analytics — handled.">
+  <meta property="og:image" content="assets/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Reedhaus — Websites &amp; Tech, Handled.">
+  <meta name="twitter:description" content="The outsourced tech team for businesses that don't have one. Site, Google, payments, analytics — handled.">
+  <meta name="twitter:image" content="assets/og-image.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Fraunces', 'Georgia', 'serif'],
+            sans: ['Geist', 'system-ui', 'sans-serif'],
+            mono: ['"Geist Mono"', 'ui-monospace', 'monospace'],
+          },
+          colors: {
+            paper: '#FAFAF7',
+            ink: '#0A0A0A',
+            ink2: '#1A1A1A',
+            muted: '#6B6B6B',
+            line: '#E5E5E0',
+            accent: '#C8A24B',
+            accentAlt: '#1E40AF',
+            lime: '#D9F26B',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Geist', system-ui, sans-serif;
+      background: #FAFAF7;
+      color: #0A0A0A;
+      transition: background-color 0.6s ease, color 0.6s ease;
+    }
+    .dark body, body.dark { background: #0A0A0A; color: #FAFAF7; }
+    .display { font-family: 'Fraunces', Georgia, serif; }
+    .mono { font-family: 'Geist Mono', ui-monospace, monospace; }
+
+    /* Noise texture */
+    .noise::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.18 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      opacity: 0.6;
+      pointer-events: none;
+      mix-blend-mode: multiply;
+    }
+
+    /* Mesh gradient hero blob */
+    .mesh {
+      background:
+        radial-gradient(at 18% 22%, rgba(217, 242, 107, 0.55) 0px, transparent 50%),
+        radial-gradient(at 82% 12%, rgba(200, 162, 75, 0.45) 0px, transparent 50%),
+        radial-gradient(at 60% 88%, rgba(30, 64, 175, 0.25) 0px, transparent 50%),
+        radial-gradient(at 12% 90%, rgba(217, 242, 107, 0.35) 0px, transparent 50%);
+      filter: blur(40px);
+    }
+    .dark .mesh {
+      background:
+        radial-gradient(at 18% 22%, rgba(217, 242, 107, 0.35) 0px, transparent 50%),
+        radial-gradient(at 82% 12%, rgba(200, 162, 75, 0.25) 0px, transparent 50%),
+        radial-gradient(at 60% 88%, rgba(30, 64, 175, 0.4) 0px, transparent 50%),
+        radial-gradient(at 12% 90%, rgba(217, 242, 107, 0.2) 0px, transparent 50%);
+    }
+
+    .grid-bg {
+      background-image:
+        linear-gradient(rgba(10,10,10,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(10,10,10,0.05) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+    .dark .grid-bg {
+      background-image:
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+    }
+
+    .fade-in {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1);
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* Magnetic-style CTA */
+    .magnetic {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 1rem 1.6rem;
+      background: #0A0A0A;
+      color: #FAFAF7;
+      border-radius: 9999px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), background 0.3s ease, color 0.3s ease;
+      overflow: hidden;
+    }
+    .dark .magnetic { background: #D9F26B; color: #0A0A0A; }
+    .magnetic::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: #D9F26B;
+      transform: translateY(100%);
+      transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
+      z-index: -1;
+    }
+    .dark .magnetic::after { background: #FAFAF7; }
+    .magnetic:hover { color: #0A0A0A; }
+    .magnetic:hover::after { transform: translateY(0); }
+    .magnetic .arr { transition: transform 0.4s cubic-bezier(0.16,1,0.3,1); }
+    .magnetic:hover .arr { transform: translateX(4px) rotate(-45deg); }
+
+    .ghost {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 1rem 1.4rem; border-radius: 9999px;
+      border: 1px solid rgba(10,10,10,0.18);
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+    .ghost:hover { background: rgba(10,10,10,0.05); border-color: rgba(10,10,10,0.4); }
+    .dark .ghost { border-color: rgba(250,250,247,0.2); }
+    .dark .ghost:hover { background: rgba(250,250,247,0.05); border-color: rgba(250,250,247,0.5); }
+
+    .card {
+      border: 1px solid rgba(10,10,10,0.08);
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: blur(10px);
+      transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), border-color 0.4s ease, box-shadow 0.5s ease;
+    }
+    .dark .card {
+      border-color: rgba(255,255,255,0.08);
+      background: rgba(26,26,26,0.6);
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(10,10,10,0.25);
+      box-shadow: 0 30px 60px -30px rgba(10,10,10,0.18);
+    }
+    .dark .card:hover { border-color: rgba(217,242,107,0.4); box-shadow: 0 30px 60px -30px rgba(217,242,107,0.15); }
+
+    .price-feature {
+      display: flex; align-items: flex-start; gap: 0.65rem;
+      font-size: 0.95rem; line-height: 1.45;
+    }
+    .price-feature svg { flex-shrink: 0; margin-top: 0.3rem; }
+
+    .marquee {
+      display: flex;
+      gap: 4rem;
+      animation: marquee 40s linear infinite;
+      width: max-content;
+    }
+    @keyframes marquee {
+      to { transform: translateX(-50%); }
+    }
+
+    .tilt:hover { transform: rotate(-1.2deg) translateY(-3px); }
+    .tilt { transition: transform 0.5s cubic-bezier(0.16,1,0.3,1); }
+
+    /* Live "site" preview frames */
+    .browser {
+      border-radius: 14px;
+      overflow: hidden;
+      background: white;
+      border: 1px solid rgba(10,10,10,0.1);
+      box-shadow: 0 24px 60px -30px rgba(10,10,10,0.3);
+    }
+    .dark .browser { background: #1A1A1A; border-color: rgba(255,255,255,0.1); }
+    .browser-bar {
+      display: flex; align-items: center; gap: 6px;
+      padding: 10px 14px;
+      background: rgba(10,10,10,0.04);
+      border-bottom: 1px solid rgba(10,10,10,0.06);
+    }
+    .dark .browser-bar { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.06); }
+    .dot { width: 10px; height: 10px; border-radius: 9999px; background: rgba(10,10,10,0.15); }
+    .dark .dot { background: rgba(255,255,255,0.2); }
+
+    .blink { animation: blink 1s steps(1) infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    details > summary { list-style: none; cursor: pointer; }
+    details > summary::-webkit-details-marker { display: none; }
+    details[open] .faq-icon { transform: rotate(45deg); }
+    .faq-icon { transition: transform 0.4s cubic-bezier(0.16,1,0.3,1); }
+
+    .underline-fancy { position: relative; display: inline-block; }
+    .underline-fancy::after {
+      content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
+      height: 1.5px; background: currentColor;
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
+    }
+    .underline-fancy:hover::after { transform: scaleX(1); }
+
+    .badge {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.35rem 0.7rem;
+      border-radius: 9999px;
+      font-family: 'Geist Mono', ui-monospace, monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: 1px solid rgba(10,10,10,0.15);
+    }
+    .dark .badge { border-color: rgba(255,255,255,0.18); }
+
+    .pulse-dot {
+      width: 8px; height: 8px; border-radius: 9999px; background: #16A34A;
+      box-shadow: 0 0 0 0 rgba(22,163,74, 0.6);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      70% { box-shadow: 0 0 0 10px rgba(22,163,74, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(22,163,74, 0); }
+    }
+
+    /* Featured pricing card */
+    .featured {
+      background: linear-gradient(180deg, #0A0A0A 0%, #1A1A1A 100%);
+      color: #FAFAF7;
+      border-color: transparent;
+    }
+    .dark .featured {
+      background: linear-gradient(180deg, #D9F26B 0%, #C8A24B 100%);
+      color: #0A0A0A;
+    }
+    .featured .price-feature { color: rgba(250,250,247,0.85); }
+    .dark .featured .price-feature { color: rgba(10,10,10,0.85); }
+
+    /* ===== Modals ===== */
+    .modal-backdrop {
+      position: fixed; inset: 0;
+      background: rgba(10,10,10,0.55);
+      backdrop-filter: blur(10px);
+      z-index: 100;
+      display: none;
+      align-items: center; justify-content: center;
+      padding: 1rem;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .modal-backdrop.open { display: flex; opacity: 1; }
+    .modal-content {
+      background: white;
+      border-radius: 1.5rem;
+      width: 100%;
+      max-height: 92vh;
+      overflow-y: auto;
+      position: relative;
+      transform: scale(0.96);
+      opacity: 0;
+      transition: transform 0.45s cubic-bezier(0.16,1,0.3,1), opacity 0.35s ease;
+      box-shadow: 0 50px 120px -30px rgba(10,10,10,0.45);
+    }
+    .dark .modal-content { background: #1A1A1A; color: #FAFAF7; }
+    .modal-backdrop.open .modal-content { transform: scale(1); opacity: 1; }
+    .modal-close {
+      position: absolute; top: 1.1rem; right: 1.1rem;
+      width: 34px; height: 34px;
+      border-radius: 9999px;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(10,10,10,0.06);
+      color: rgba(10,10,10,0.6);
+      transition: all 0.2s ease;
+      z-index: 10;
+      cursor: pointer;
+      border: 0;
+    }
+    .modal-close:hover { background: rgba(10,10,10,0.12); color: rgba(10,10,10,0.9); }
+    .dark .modal-close { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.7); }
+    .dark .modal-close:hover { background: rgba(255,255,255,0.15); color: white; }
+    .modal-input {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border: 1px solid #E5E5E0;
+      border-radius: 0.85rem;
+      background: #FAFAF7;
+      font-family: 'Geist', system-ui, sans-serif;
+      font-size: 0.9375rem;
+      color: #0A0A0A;
+      transition: border-color 0.2s ease, background 0.2s ease;
+      appearance: none;
+    }
+    .modal-input:focus { outline: none; border-color: #0A0A0A; background: white; }
+    .dark .modal-input {
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(255,255,255,0.1);
+      color: #FAFAF7;
+    }
+    .dark .modal-input:focus { border-color: #D9F26B; background: rgba(255,255,255,0.07); }
+    .modal-input::placeholder { color: rgba(10,10,10,0.4); }
+    .dark .modal-input::placeholder { color: rgba(255,255,255,0.35); }
+    select.modal-input {
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230A0A0A' stroke-width='2'%3e%3cpath d='M6 9l6 6 6-6'/%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      background-size: 1rem;
+      padding-right: 2.5rem;
+    }
+    .cal-day {
+      cursor: pointer;
+      border-radius: 0.5rem;
+      padding: 0.55rem 0;
+      transition: background 0.15s ease, color 0.15s ease;
+      font-family: 'Geist Mono', ui-monospace, monospace;
+      font-size: 0.8rem;
+    }
+    .cal-day:hover { background: rgba(10,10,10,0.06); }
+    .cal-day.selected { background: #0A0A0A; color: #FAFAF7; }
+    .cal-day.disabled { opacity: 0.25; cursor: default; pointer-events: none; }
+    .dark .cal-day:hover { background: rgba(255,255,255,0.08); }
+    .dark .cal-day.selected { background: #D9F26B; color: #0A0A0A; }
+    .time-slot {
+      width: 100%;
+      padding: 0.7rem 1rem;
+      border: 1px solid #E5E5E0;
+      border-radius: 0.75rem;
+      font-size: 0.85rem;
+      font-family: 'Geist Mono', ui-monospace, monospace;
+      transition: all 0.2s ease;
+      text-align: left;
+      background: white;
+      color: #0A0A0A;
+      cursor: pointer;
+    }
+    .time-slot:hover { border-color: #0A0A0A; }
+    .time-slot.selected { background: #0A0A0A; color: #FAFAF7; border-color: #0A0A0A; }
+    .dark .time-slot { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.1); color: #FAFAF7; }
+    .dark .time-slot:hover { border-color: #D9F26B; }
+    .dark .time-slot.selected { background: #D9F26B; color: #0A0A0A; border-color: #D9F26B; }
+    body.modal-open { overflow: hidden; }
+  </style>
+</head>
+<body class="overflow-x-hidden">
+
+  <!-- ===================== NAV ===================== -->
+  <header class="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-paper/70 dark:bg-ink/70 border-b border-line/60 dark:border-white/10">
+    <div class="max-w-[1440px] mx-auto px-6 lg:px-12 py-4 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-2">
+        <img src="assets/logo-square.png" alt="Reedhaus" class="w-8 h-8 object-contain">
+        <span class="display text-xl tracking-tight">Reedhaus</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-9 text-sm">
+        <a href="#services" class="underline-fancy opacity-80 hover:opacity-100">Services</a>
+        <a href="#pricing" class="underline-fancy opacity-80 hover:opacity-100">Pricing</a>
+        <a href="#process" class="underline-fancy opacity-80 hover:opacity-100">Process</a>
+        <a href="#faq" class="underline-fancy opacity-80 hover:opacity-100">FAQ</a>
+      </nav>
+      <div class="flex items-center gap-2">
+        <button id="themeToggle" aria-label="Toggle dark mode" class="w-10 h-10 rounded-full border border-line dark:border-white/10 flex items-center justify-center hover:bg-black/5 dark:hover:bg-white/5 transition">
+          <svg class="w-4 h-4 hidden dark:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          <svg class="w-4 h-4 dark:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <a href="#pricing" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full bg-ink text-paper dark:bg-lime dark:text-ink text-sm font-medium hover:opacity-90 transition">
+          Get started
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================== HERO ===================== -->
+  <section class="relative pt-32 lg:pt-44 pb-24 lg:pb-32 overflow-hidden">
+    <div class="absolute inset-0 grid-bg opacity-50"></div>
+    <div class="absolute -top-40 -left-40 w-[700px] h-[700px] mesh"></div>
+    <div class="absolute -top-20 -right-20 w-[500px] h-[500px] mesh opacity-70"></div>
+
+    <div class="relative max-w-[1440px] mx-auto px-6 lg:px-12">
+
+      <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+
+        <!-- LEFT: text -->
+        <div class="lg:col-span-7 fade-in">
+          <div class="flex items-center gap-3 mb-8">
+            <div class="pulse-dot"></div>
+            <span class="mono text-xs tracking-widest uppercase opacity-70">Taking 3 clients in May</span>
+          </div>
+          <h1 class="display text-[clamp(2.75rem,8vw,7rem)] leading-[0.92] tracking-[-0.04em] font-medium">
+            Your site,<br>
+            <span class="italic font-light opacity-80">handled.</span>
+          </h1>
+          <p class="text-lg lg:text-xl max-w-xl opacity-80 leading-relaxed mt-8">
+            We're not a web design shop. We're the outsourced tech team for local businesses that don't have one. One flat monthly fee. Site, Google Business Profile, payments, analytics, edits — all of it.
+          </p>
+          <div class="flex flex-wrap items-center gap-4 mt-10">
+            <a href="#pricing" class="magnetic">
+              See pricing
+              <svg class="w-4 h-4 arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a href="#process" class="ghost">
+              How it works
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          </div>
+          <div class="flex flex-wrap items-center gap-x-8 gap-y-3 mt-10 text-sm opacity-70">
+            <span class="flex items-center gap-2"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Live in 7 days</span>
+            <span class="flex items-center gap-2"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Cancel anytime</span>
+            <span class="flex items-center gap-2"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> No long contracts</span>
+          </div>
+        </div>
+
+        <!-- RIGHT: device composition (browser + phone overlap) -->
+        <div class="lg:col-span-5 fade-in">
+          <div class="relative">
+
+            <!-- Soft ambient glow behind composition -->
+            <div class="absolute -inset-10 rounded-[3rem] opacity-50 pointer-events-none"
+                 style="background: radial-gradient(ellipse at 70% 40%, rgba(200,162,75,0.35), transparent 60%), radial-gradient(ellipse at 30% 80%, rgba(217,242,107,0.3), transparent 65%); filter: blur(28px);"></div>
+
+            <!-- Browser (Bella Roma desktop) -->
+            <div class="browser tilt relative">
+              <div class="browser-bar">
+                <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                <div class="ml-3 mono text-xs opacity-50">bellaroma.com</div>
+              </div>
+              <div class="p-6 lg:p-8 bg-gradient-to-br from-white via-paper to-white dark:from-ink2 dark:via-ink dark:to-ink2">
+                <div class="flex items-center justify-between mb-6">
+                  <span class="display text-xl">Bella Roma</span>
+                  <span class="mono text-[10px] opacity-60">OPEN · 11A&ndash;10P</span>
+                </div>
+                <div class="display text-3xl lg:text-4xl leading-[1] mb-4">
+                  Wood-fired<br>since 1998.
+                </div>
+                <div class="h-32 rounded-lg bg-gradient-to-br from-orange-200 via-amber-100 to-rose-200 dark:from-amber-900/40 dark:via-orange-900/30 dark:to-rose-900/40 mb-4 relative overflow-hidden">
+                  <div class="absolute bottom-2 right-2 mono text-[10px] opacity-60">photo / menu hero</div>
+                </div>
+                <div class="grid grid-cols-3 gap-2">
+                  <div class="h-10 rounded bg-black/5 dark:bg-white/5"></div>
+                  <div class="h-10 rounded bg-black/5 dark:bg-white/5"></div>
+                  <div class="h-10 rounded bg-ink text-paper dark:bg-lime dark:text-ink flex items-center justify-center text-xs font-medium">Order</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Phone overlapping bottom-left of browser -->
+            <div class="hidden lg:block absolute -left-10 xl:-left-16 -bottom-10 z-20 tilt"
+                 style="width: 150px; aspect-ratio: 9 / 19.5;">
+              <div class="absolute -inset-3 rounded-[2.5rem] opacity-50 pointer-events-none"
+                   style="background: radial-gradient(circle, rgba(10,10,10,0.25), transparent 70%); filter: blur(14px);"></div>
+              <div class="relative w-full h-full rounded-[2rem] bg-ink dark:bg-paper p-[4px] shadow-[0_25px_50px_-15px_rgba(10,10,10,0.5)]">
+                <div class="relative w-full h-full rounded-[1.7rem] overflow-hidden bg-gradient-to-br from-orange-100 via-amber-50 to-rose-100 dark:from-amber-900/40 dark:via-orange-900/30 dark:to-rose-900/30">
+                  <div class="absolute top-2 left-2.5 right-2.5 flex justify-between items-center text-[7px] mono opacity-70 z-10">
+                    <span>9:41</span>
+                    <span class="flex items-center gap-0.5">
+                      <span class="w-0.5 h-0.5 bg-current rounded-full"></span>
+                      <span class="w-0.5 h-0.5 bg-current rounded-full opacity-70"></span>
+                      <span class="w-1.5 h-0.5 bg-current rounded-sm opacity-80 ml-0.5"></span>
+                    </span>
+                  </div>
+                  <div class="absolute top-1 left-1/2 -translate-x-1/2 w-10 h-2.5 bg-ink dark:bg-ink rounded-full z-20"></div>
+                  <div class="absolute inset-x-2.5 top-7 bottom-2.5 flex flex-col">
+                    <div class="flex items-baseline justify-between mb-0.5">
+                      <span class="display text-[11px] leading-none">Bella Roma</span>
+                      <span class="mono text-[5px] opacity-60 tracking-widest">OPEN</span>
+                    </div>
+                    <div class="display text-[0.9rem] leading-[0.92] mb-1.5 mt-1">
+                      Wood-fired<br>pizza.
+                    </div>
+                    <div class="flex-1 rounded-sm bg-gradient-to-br from-orange-300 via-amber-200 to-rose-200 dark:from-amber-900/60 dark:via-orange-900/50 dark:to-rose-900/50"></div>
+                    <div class="h-5 mt-1.5 rounded-full bg-ink text-paper flex items-center justify-center text-[7px] font-medium">Order →</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="flex items-center justify-between mt-12 lg:mt-16 text-xs mono opacity-60">
+            <span>+ GBP optimized</span>
+            <span>+ Stripe wired</span>
+            <span>+ GA4 live</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SCROLL REEL (Three.js video scrub) ===================== -->
+  <section id="scroll-reel" class="relative" style="height: 180vh;">
+    <div class="sticky top-0 h-screen overflow-hidden flex items-center justify-center">
+
+      <!-- Clean gradient background -->
+      <div class="absolute inset-0 bg-gradient-to-br from-lime/30 via-paper to-accent/20 dark:from-accentAlt/30 dark:via-ink dark:to-lime/10"></div>
+      <div class="absolute inset-0 grid-bg opacity-30 pointer-events-none"></div>
+      <div class="absolute inset-0 noise opacity-40 pointer-events-none"></div>
+
+      <!-- Three.js canvas mount -->
+      <canvas id="rh-canvas" class="absolute inset-0 w-full h-full"></canvas>
+
+      <!-- Hidden source video -->
+      <video id="rh-video" src="assets/hero-scrub.mp4" muted playsinline preload="auto" crossorigin="anonymous" style="position:absolute; width:1px; height:1px; opacity:0; pointer-events:none;"></video>
+
+    </div>
+  </section>
+
+  <!-- ===================== MARQUEE ===================== -->
+  <section class="py-6 border-y border-line/60 dark:border-white/10 overflow-hidden bg-ink text-paper dark:bg-lime dark:text-ink">
+    <div class="marquee mono text-sm tracking-widest uppercase">
+      <span>Websites</span><span>•</span>
+      <span>Hosting &amp; Domains</span><span>•</span>
+      <span>Google Business Profile</span><span>•</span>
+      <span>Local SEO</span><span>•</span>
+      <span>Payments</span><span>•</span>
+      <span>AI Chatbots</span><span>•</span>
+      <span>Monthly Reports</span><span>•</span>
+      <span>Business Email</span><span>•</span>
+      <span>Bilingual</span><span>•</span>
+      <span>Content Edits</span><span>•</span>
+      <span>Brand Refresh</span><span>•</span>
+      <span>Analytics</span><span>•</span>
+      <span>Websites</span><span>•</span>
+      <span>Hosting &amp; Domains</span><span>•</span>
+      <span>Google Business Profile</span><span>•</span>
+      <span>Local SEO</span><span>•</span>
+      <span>Payments</span><span>•</span>
+      <span>AI Chatbots</span><span>•</span>
+      <span>Monthly Reports</span><span>•</span>
+      <span>Business Email</span><span>•</span>
+      <span>Bilingual</span><span>•</span>
+      <span>Content Edits</span><span>•</span>
+      <span>Brand Refresh</span><span>•</span>
+      <span>Analytics</span><span>•</span>
+    </div>
+  </section>
+
+  <!-- ===================== SERVICES BENTO ===================== -->
+  <section id="services" class="py-24 lg:py-32 relative">
+    <div class="max-w-[1440px] mx-auto px-6 lg:px-12">
+      <div class="flex items-end justify-between flex-wrap gap-6 mb-14 fade-in">
+        <div>
+          <div class="badge mb-4">01 / What we run</div>
+          <h2 class="display text-[clamp(2rem,5vw,4.5rem)] leading-[1] tracking-[-0.03em] max-w-3xl">
+            Everything a local business<br>actually needs. <span class="italic opacity-70">Nothing else.</span>
+          </h2>
+        </div>
+        <p class="max-w-md opacity-70 text-lg">
+          We don't do hourly. We don't do "websites only." You pay one fee, we handle the whole stack so you can run your business.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-12 grid-rows-[auto] gap-4 lg:gap-6">
+        <!-- Big: Site -->
+        <div class="card rounded-3xl p-8 lg:p-10 col-span-12 lg:col-span-7 lg:row-span-2 relative overflow-hidden">
+          <div class="absolute top-6 right-6 badge">Built fresh</div>
+          <div class="text-5xl mb-6">🌐</div>
+          <h3 class="display text-3xl lg:text-4xl mb-3 tracking-tight">Your website</h3>
+          <p class="opacity-70 leading-relaxed mb-8 max-w-md">
+            Modern, fast, mobile-first. Next.js + Tailwind. Custom-feeling design that doesn't look like every other small-business template.
+          </p>
+          <div class="grid grid-cols-3 gap-2">
+            <div class="h-16 rounded-lg bg-gradient-to-br from-lime/40 to-accent/30 dark:from-lime/20 dark:to-accent/10"></div>
+            <div class="h-16 rounded-lg bg-gradient-to-br from-accent/30 to-accentAlt/30 dark:from-accent/20 dark:to-accentAlt/20"></div>
+            <div class="h-16 rounded-lg bg-gradient-to-br from-accentAlt/30 to-lime/40 dark:from-accentAlt/30 dark:to-lime/20"></div>
+          </div>
+        </div>
+
+        <!-- Google -->
+        <div class="card rounded-3xl p-8 col-span-12 sm:col-span-6 lg:col-span-5">
+          <div class="text-4xl mb-4">📍</div>
+          <h3 class="display text-2xl mb-2">Google Business Profile</h3>
+          <p class="opacity-70 text-sm leading-relaxed">Setup, optimization, weekly posts, review responses. The thing actually winning you customers.</p>
+        </div>
+
+        <!-- Payments -->
+        <div class="card rounded-3xl p-8 col-span-12 sm:col-span-6 lg:col-span-5">
+          <div class="text-4xl mb-4">💳</div>
+          <h3 class="display text-2xl mb-2">Payments</h3>
+          <p class="opacity-70 text-sm leading-relaxed">Stripe. Square. Alipay / WeChat for cross-border. Wired into your site so you actually get paid.</p>
+        </div>
+
+        <!-- Chatbot -->
+        <div class="card rounded-3xl p-8 col-span-12 sm:col-span-6 lg:col-span-4">
+          <div class="text-4xl mb-4">💬</div>
+          <h3 class="display text-2xl mb-2">AI chatbot</h3>
+          <p class="opacity-70 text-sm leading-relaxed">Trained on your business. Answers hours, prices, location, FAQ — 24/7.</p>
+        </div>
+
+        <!-- Reports -->
+        <div class="card rounded-3xl p-8 col-span-12 sm:col-span-6 lg:col-span-4">
+          <div class="text-4xl mb-4">📈</div>
+          <h3 class="display text-2xl mb-2">Monthly reports</h3>
+          <p class="opacity-70 text-sm leading-relaxed">GA4 + Search Console + GBP, summarized in plain English. Auto-emailed the 1st.</p>
+        </div>
+
+        <!-- Edits -->
+        <div class="card rounded-3xl p-8 col-span-12 lg:col-span-4 featured">
+          <div class="text-4xl mb-4">⚡</div>
+          <h3 class="display text-2xl mb-2">Edits, same week</h3>
+          <p class="opacity-80 text-sm leading-relaxed">Need a new menu, price change, holiday hours? Text us. Done within days, not "next sprint."</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PRICING ===================== -->
+  <section id="pricing" class="py-24 lg:py-32 relative bg-paper dark:bg-ink2/40 border-y border-line/60 dark:border-white/10">
+    <div class="absolute inset-0 grid-bg opacity-40 pointer-events-none"></div>
+    <div class="relative max-w-[1440px] mx-auto px-6 lg:px-12">
+      <div class="text-center mb-16 fade-in">
+        <div class="badge mb-4">02 / Pricing</div>
+        <h2 class="display text-[clamp(2.25rem,6vw,5.5rem)] leading-[1] tracking-[-0.03em] max-w-4xl mx-auto">
+          One flat fee. <span class="italic opacity-70">No hidden hours.</span>
+        </h2>
+        <p class="opacity-70 max-w-xl mx-auto mt-6 text-lg">
+          You pay setup once, then a flat monthly that includes everything — site, hosting, domain, edits, Google, reports.
+        </p>
+      </div>
+
+      <div class="grid lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+
+        <!-- Tier 1 -->
+        <div class="card rounded-3xl p-8 lg:p-10 flex flex-col fade-in">
+          <div class="mb-6">
+            <div class="mono text-xs uppercase tracking-widest opacity-60 mb-3">Launch + Care</div>
+            <h3 class="display text-3xl tracking-tight mb-4">Starter</h3>
+            <div class="flex items-baseline gap-2">
+              <span class="display text-5xl">$149</span>
+              <span class="opacity-60 text-sm">/ month</span>
+            </div>
+            <div class="mono text-xs opacity-60 mt-2">+ $500 one-time setup</div>
+          </div>
+          <p class="opacity-70 text-sm mb-6 pb-6 border-b border-line dark:border-white/10">
+            For small local businesses that need a real online home. Single landing page, done right.
+          </p>
+          <ul class="space-y-3 mb-8 flex-1">
+            <li class="price-feature"><svg class="w-4 h-4 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> 1-page modern responsive site</li>
+            <li class="price-feature"><svg class="w-4 h-4 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Domain + hosting handled</li>
+            <li class="price-feature"><svg class="w-4 h-4 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Business email on your domain</li>
+            <li class="price-feature"><svg class="w-4 h-4 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Google Business Profile setup</li>
+            <li class="price-feature"><svg class="w-4 h-4 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Contact form → phone/email</li>
+            <li class="price-feature"><svg class="w-4 h-4 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> 2 small edits per month</li>
+            <li class="price-feature"><svg class="w-4 h-4 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Monthly performance report</li>
+            <li class="price-feature"><svg class="w-4 h-4 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Basic local SEO + schema</li>
+          </ul>
+          <a href="#" onclick="event.preventDefault(); openModal('modal-checkout');" class="ghost justify-center">Start in 7 days →</a>
+        </div>
+
+        <!-- Tier 2 — Featured -->
+        <div class="card rounded-3xl p-8 lg:p-10 flex flex-col featured fade-in relative">
+          <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-lime text-ink mono text-[10px] tracking-widest uppercase px-3 py-1.5 rounded-full font-semibold">Most chosen</div>
+          <div class="mb-6">
+            <div class="mono text-xs uppercase tracking-widest opacity-70 mb-3">Tech Partner</div>
+            <h3 class="display text-3xl tracking-tight mb-4">Pro</h3>
+            <div class="flex items-baseline gap-2">
+              <span class="display text-5xl">$799</span>
+              <span class="opacity-70 text-sm">/ month</span>
+            </div>
+            <div class="mono text-xs opacity-70 mt-2">+ $3,500 one-time setup</div>
+          </div>
+          <p class="opacity-80 text-sm mb-6 pb-6 border-b border-white/20 dark:border-black/20">
+            We become your tech team. Full site, chatbot, payments, bilingual. Everything Starter has — plus the works.
+          </p>
+          <ul class="space-y-3 mb-8 flex-1">
+            <li class="price-feature"><svg class="w-4 h-4 text-lime dark:text-accentAlt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Everything in Starter</li>
+            <li class="price-feature"><svg class="w-4 h-4 text-lime dark:text-accentAlt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> 5&ndash;7 page custom site</li>
+            <li class="price-feature"><svg class="w-4 h-4 text-lime dark:text-accentAlt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> AI chatbot trained on your biz</li>
+            <li class="price-feature"><svg class="w-4 h-4 text-lime dark:text-accentAlt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Bilingual toggle (EN / 中文)</li>
+            <li class="price-feature"><svg class="w-4 h-4 text-lime dark:text-accentAlt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Stripe / Square / Alipay / WeChat</li>
+            <li class="price-feature"><svg class="w-4 h-4 text-lime dark:text-accentAlt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Quarterly photo refresh</li>
+            <li class="price-feature"><svg class="w-4 h-4 text-lime dark:text-accentAlt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Client dashboard access</li>
+            <li class="price-feature"><svg class="w-4 h-4 text-lime dark:text-accentAlt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Priority 24-hr response</li>
+          </ul>
+          <a href="#" onclick="event.preventDefault(); openModal('modal-calendar');" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-lime text-ink dark:bg-ink dark:text-lime font-medium hover:opacity-90 transition">
+            Book a discovery call
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+
+        <!-- Tier 3 -->
+        <div class="card rounded-3xl p-8 lg:p-10 flex flex-col fade-in">
+          <div class="mb-6">
+            <div class="mono text-xs uppercase tracking-widest opacity-60 mb-3">Bilingual / Niche</div>
+            <h3 class="display text-3xl tracking-tight mb-4">Signature</h3>
+            <div class="flex items-baseline gap-2">
+              <span class="display text-5xl">$500</span>
+              <span class="opacity-60 text-sm">/ month</span>
+            </div>
+            <div class="mono text-xs opacity-60 mt-2">+ $2,000 one-time setup</div>
+          </div>
+          <p class="opacity-70 text-sm mb-6 pb-6 border-b border-line dark:border-white/10">
+            For bigger local businesses or clients needing bilingual / cross-border. Starter foundation + serious specialty.
+          </p>
+          <ul class="space-y-3 mb-8 flex-1">
+            <li class="price-feature"><svg class="w-4 h-4 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Everything in Starter</li>
+            <li class="price-feature"><svg class="w-4 h-4 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Multi-page expanded site</li>
+            <li class="price-feature"><svg class="w-4 h-4 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Bilingual content (EN / 中文)</li>
+            <li class="price-feature"><svg class="w-4 h-4 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Cross-border payment setup</li>
+            <li class="price-feature"><svg class="w-4 h-4 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Industry-tuned design vibe</li>
+            <li class="price-feature"><svg class="w-4 h-4 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> 4 small edits per month</li>
+            <li class="price-feature"><svg class="w-4 h-4 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Quarterly strategy call</li>
+            <li class="price-feature"><svg class="w-4 h-4 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Local SEO + GBP optimization</li>
+          </ul>
+          <a href="#" onclick="event.preventDefault(); openModal('modal-intake');" class="ghost justify-center">Get a quote →</a>
+        </div>
+      </div>
+
+      <!-- Add-on banner -->
+      <div class="mt-10 max-w-6xl mx-auto card rounded-3xl p-8 lg:p-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 fade-in">
+        <div>
+          <div class="mono text-xs uppercase tracking-widest opacity-60 mb-2">+ Add-on</div>
+          <h3 class="display text-2xl lg:text-3xl mb-2">SEO Pro</h3>
+          <p class="opacity-70 max-w-xl text-sm">Monthly local-intent blog post, weekly GBP post, ranking report, review response management. Stack on any tier.</p>
+        </div>
+        <div class="flex items-center gap-6">
+          <div>
+            <div class="display text-4xl">+$150</div>
+            <div class="mono text-xs opacity-60">/ month</div>
+          </div>
+          <a href="#contact" class="ghost">Add SEO Pro →</a>
+        </div>
+      </div>
+
+      <!-- À la carte -->
+      <div class="mt-16 max-w-6xl mx-auto fade-in">
+        <div class="mono text-xs uppercase tracking-widest opacity-60 mb-6 text-center">À la carte — one-time</div>
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="card rounded-2xl p-6">
+            <div class="display text-2xl mb-1">$250</div>
+            <div class="text-sm opacity-70">Logo / brand refresh</div>
+          </div>
+          <div class="card rounded-2xl p-6">
+            <div class="display text-2xl mb-1">$100</div>
+            <div class="text-sm opacity-70">Additional page</div>
+          </div>
+          <div class="card rounded-2xl p-6">
+            <div class="display text-2xl mb-1">$250</div>
+            <div class="text-sm opacity-70">Migration from old site</div>
+          </div>
+          <div class="card rounded-2xl p-6">
+            <div class="display text-2xl mb-1">Free</div>
+            <div class="text-sm opacity-70">LLC / banking referrals</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PROCESS ===================== -->
+  <section id="process" class="py-24 lg:py-32">
+    <div class="max-w-[1440px] mx-auto px-6 lg:px-12">
+      <div class="flex items-end justify-between flex-wrap gap-6 mb-14 fade-in">
+        <div>
+          <div class="badge mb-4">03 / How it works</div>
+          <h2 class="display text-[clamp(2rem,5vw,4.5rem)] leading-[1] tracking-[-0.03em] max-w-3xl">
+            Live in <span class="italic opacity-70">seven days.</span><br>Sometimes less.
+          </h2>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="card rounded-3xl p-8 relative fade-in">
+          <div class="mono text-xs opacity-50 mb-6">STEP 01 · DAY 1</div>
+          <div class="display text-5xl mb-6 opacity-20">01</div>
+          <h3 class="display text-2xl mb-3">15-min call</h3>
+          <p class="opacity-70 text-sm leading-relaxed">You tell us about your business. We listen. No pitch deck.</p>
+        </div>
+        <div class="card rounded-3xl p-8 relative fade-in">
+          <div class="mono text-xs opacity-50 mb-6">STEP 02 · DAY 2</div>
+          <div class="display text-5xl mb-6 opacity-20">02</div>
+          <h3 class="display text-2xl mb-3">Mockup</h3>
+          <p class="opacity-70 text-sm leading-relaxed">You see a live preview of your site within 48 hours. Approve or tweak.</p>
+        </div>
+        <div class="card rounded-3xl p-8 relative fade-in">
+          <div class="mono text-xs opacity-50 mb-6">STEP 03 · DAY 4&ndash;6</div>
+          <div class="display text-5xl mb-6 opacity-20">03</div>
+          <h3 class="display text-2xl mb-3">Build + wire</h3>
+          <p class="opacity-70 text-sm leading-relaxed">Site goes live. Google, email, analytics, payments — all hooked up.</p>
+        </div>
+        <div class="card rounded-3xl p-8 relative fade-in featured">
+          <div class="mono text-xs opacity-70 mb-6">STEP 04 · ONGOING</div>
+          <div class="display text-5xl mb-6 opacity-30">04</div>
+          <h3 class="display text-2xl mb-3">We run it</h3>
+          <p class="opacity-80 text-sm leading-relaxed">You text us when you need changes. We handle everything else, forever.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===================== FAQ ===================== -->
+  <section id="faq" class="py-24 lg:py-32">
+    <div class="max-w-[1100px] mx-auto px-6 lg:px-12">
+      <div class="mb-14 fade-in">
+        <div class="badge mb-4">04 / FAQ</div>
+        <h2 class="display text-[clamp(2rem,5vw,4.5rem)] leading-[1] tracking-[-0.03em]">
+          Asked &amp; answered.
+        </h2>
+      </div>
+
+      <div class="space-y-3">
+        <details class="card rounded-2xl p-6 lg:p-8 fade-in" open>
+          <summary class="flex items-center justify-between gap-6">
+            <span class="display text-xl lg:text-2xl">Do I own the website?</span>
+            <span class="faq-icon display text-2xl opacity-60">+</span>
+          </summary>
+          <p class="mt-4 opacity-70 leading-relaxed text-sm lg:text-base">
+            You license access while you're a client. We host, maintain, and run it. If you leave, we'll hand off the content and brand assets — but the codebase and integrations stay with us. Same way you don't "own" your Squarespace site.
+          </p>
+        </details>
+
+        <details class="card rounded-2xl p-6 lg:p-8 fade-in">
+          <summary class="flex items-center justify-between gap-6">
+            <span class="display text-xl lg:text-2xl">What if I want to cancel?</span>
+            <span class="faq-icon display text-2xl opacity-60">+</span>
+          </summary>
+          <p class="mt-4 opacity-70 leading-relaxed text-sm lg:text-base">
+            No contracts. Cancel any month. We'll archive your data and give you 30 days to find a new home. We don't believe in hostage situations.
+          </p>
+        </details>
+
+        <details class="card rounded-2xl p-6 lg:p-8 fade-in">
+          <summary class="flex items-center justify-between gap-6">
+            <span class="display text-xl lg:text-2xl">How fast can edits happen?</span>
+            <span class="faq-icon display text-2xl opacity-60">+</span>
+          </summary>
+          <p class="mt-4 opacity-70 leading-relaxed text-sm lg:text-base">
+            Small edits — usually within 1&ndash;3 business days. Pro clients get 24-hour priority. Just text us. No tickets, no portals (unless you want one).
+          </p>
+        </details>
+
+        <details class="card rounded-2xl p-6 lg:p-8 fade-in">
+          <summary class="flex items-center justify-between gap-6">
+            <span class="display text-xl lg:text-2xl">Do you do custom apps or e-commerce?</span>
+            <span class="faq-icon display text-2xl opacity-60">+</span>
+          </summary>
+          <p class="mt-4 opacity-70 leading-relaxed text-sm lg:text-base">
+            We do simple ordering / booking / payment flows. We don't build custom web apps or full-blown Shopify-replacement stores — that's a different business. If that's you, we'll point you to someone who does that well.
+          </p>
+        </details>
+
+        <details class="card rounded-2xl p-6 lg:p-8 fade-in">
+          <summary class="flex items-center justify-between gap-6">
+            <span class="display text-xl lg:text-2xl">Why monthly instead of one-time?</span>
+            <span class="faq-icon display text-2xl opacity-60">+</span>
+          </summary>
+          <p class="mt-4 opacity-70 leading-relaxed text-sm lg:text-base">
+            Because "$5,000 once and you're on your own" is how most small businesses end up with a broken site, expired domain, and no Google profile two years later. We charge monthly because we're actually there every month.
+          </p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CTA ===================== -->
+  <section id="contact" class="py-24 lg:py-32 relative overflow-hidden">
+    <div class="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[900px] mesh opacity-80"></div>
+    <div class="relative max-w-[1100px] mx-auto px-6 lg:px-12 text-center">
+      <div class="badge mb-6 inline-flex fade-in">05 / Let's go</div>
+      <h2 class="display text-[clamp(2.5rem,8vw,7rem)] leading-[0.95] tracking-[-0.04em] fade-in">
+        Stop duct-taping<br>
+        <span class="italic opacity-80">your tech stack.</span>
+      </h2>
+      <p class="opacity-70 max-w-xl mx-auto mt-8 text-lg fade-in">
+        Book a 15-minute call. We'll tell you within 5 minutes if we're the right fit. No deck, no "discovery."
+      </p>
+      <div class="flex flex-wrap items-center justify-center gap-4 mt-10 fade-in">
+        <a href="#" class="magnetic">
+          Book a call
+          <svg class="w-4 h-4 arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href="mailto:hi@reedhaus.studio" class="ghost">
+          hi@reedhaus.studio
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M4 4l8 8 8-8"/></svg>
+        </a>
+      </div>
+      <div class="mono text-xs opacity-50 mt-10 flex items-center justify-center gap-2 fade-in">
+        <span class="blink">▍</span> usually responds within an hour
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="border-t border-line dark:border-white/10 py-12">
+    <div class="max-w-[1440px] mx-auto px-6 lg:px-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <div class="flex items-center gap-3">
+        <img src="assets/logo-square.png" alt="Reedhaus" class="w-8 h-8 object-contain">
+        <div>
+          <div class="display text-lg">Reedhaus</div>
+          <div class="mono text-xs opacity-50">Websites &amp; tech, handled.</div>
+        </div>
+      </div>
+      <nav class="flex flex-wrap gap-x-6 gap-y-2 text-sm opacity-70">
+        <a href="#services" class="underline-fancy">Services</a>
+        <a href="#pricing" class="underline-fancy">Pricing</a>
+        <a href="#faq" class="underline-fancy">FAQ</a>
+        <a href="#contact" class="underline-fancy">Contact</a>
+      </nav>
+      <div class="mono text-xs opacity-50">© 2026 Reedhaus · Built by the team that runs it</div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+  <script>
+    // ===== Scroll-driven video scrub via Three.js =====
+    (function initScrollReel() {
+      const canvas = document.getElementById('rh-canvas');
+      const video = document.getElementById('rh-video');
+      const section = document.getElementById('scroll-reel');
+      if (!canvas || !video || !section || typeof THREE === 'undefined') return;
+
+      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+
+      const texture = new THREE.VideoTexture(video);
+      texture.minFilter = THREE.LinearFilter;
+      texture.magFilter = THREE.LinearFilter;
+      texture.colorSpace = THREE.SRGBColorSpace;
+
+      const geo = new THREE.PlaneGeometry(2, 2);
+      const mat = new THREE.MeshBasicMaterial({ map: texture, transparent: true });
+      const mesh = new THREE.Mesh(geo, mat);
+      scene.add(mesh);
+
+      function fitPlane() {
+        const w = canvas.clientWidth || window.innerWidth;
+        const h = canvas.clientHeight || window.innerHeight;
+        renderer.setSize(w, h, false);
+        const vw = video.videoWidth || 16;
+        const vh = video.videoHeight || 9;
+        const videoAspect = vw / vh;
+        const canvasAspect = w / h;
+        // "cover" behavior — fill the canvas, crop overflow
+        if (canvasAspect > videoAspect) {
+          mesh.scale.set(1, canvasAspect / videoAspect, 1);
+        } else {
+          mesh.scale.set(videoAspect / canvasAspect, 1, 1);
+        }
+      }
+      window.addEventListener('resize', fitPlane);
+      video.addEventListener('loadedmetadata', fitPlane);
+      fitPlane();
+
+      // Kick the browser into decoding the first frame so the texture isn't blank
+      video.play().then(() => video.pause()).catch(() => {});
+
+      let targetTime = 0;
+      let currentTime = 0;
+
+      function updateTarget() {
+        const rect = section.getBoundingClientRect();
+        const scrollable = rect.height - window.innerHeight;
+        if (scrollable <= 0) return;
+        const progress = Math.min(1, Math.max(0, -rect.top / scrollable));
+        targetTime = progress * (video.duration || 0);
+      }
+      window.addEventListener('scroll', updateTarget, { passive: true });
+      window.addEventListener('resize', updateTarget);
+
+      let lastSet = -1;
+      function tick() {
+        currentTime += (targetTime - currentTime) * 0.08;
+        if (video.readyState >= 2 && !isNaN(currentTime)) {
+          if (Math.abs(currentTime - lastSet) > 0.016) {
+            video.currentTime = Math.max(0, Math.min(video.duration - 0.001, currentTime));
+            lastSet = currentTime;
+            texture.needsUpdate = true;
+          }
+        }
+        renderer.render(scene, camera);
+        requestAnimationFrame(tick);
+      }
+
+      if (video.readyState >= 2) {
+        updateTarget();
+        tick();
+      } else {
+        video.addEventListener('loadeddata', () => {
+          updateTarget();
+          tick();
+        }, { once: true });
+      }
+    })();
+
+    // Dark mode toggle
+    const root = document.documentElement;
+    const stored = localStorage.getItem('rh-theme');
+    if (stored === 'dark') root.classList.add('dark');
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      root.classList.toggle('dark');
+      localStorage.setItem('rh-theme', root.classList.contains('dark') ? 'dark' : 'light');
+    });
+
+    // Fade-in on scroll
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+    document.querySelectorAll('.fade-in').forEach((el) => io.observe(el));
+
+    // ===== Modals =====
+    function openModal(id) {
+      const m = document.getElementById(id);
+      if (!m) return;
+      m.classList.add('open');
+      document.body.classList.add('modal-open');
+    }
+    function closeModal(id) {
+      const m = document.getElementById(id);
+      if (!m) return;
+      m.classList.remove('open');
+      document.body.classList.remove('modal-open');
+    }
+    // Backdrop click + ESC close
+    document.querySelectorAll('.modal-backdrop').forEach(el => {
+      el.addEventListener('click', (e) => { if (e.target === el) closeModal(el.id); });
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-backdrop.open').forEach(el => closeModal(el.id));
+      }
+    });
+    // Calendar day + time slot selection (visual only)
+    document.addEventListener('click', (e) => {
+      const day = e.target.closest('.cal-day');
+      if (day && !day.classList.contains('disabled')) {
+        day.closest('[data-cal-grid]').querySelectorAll('.cal-day').forEach(d => d.classList.remove('selected'));
+        day.classList.add('selected');
+      }
+      const slot = e.target.closest('.time-slot');
+      if (slot) {
+        slot.closest('[data-slot-list]').querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+        slot.classList.add('selected');
+      }
+    });
+    // Form submissions → confirmation state
+    function showConfirmation(modalId, title, message) {
+      const modal = document.getElementById(modalId);
+      const inner = modal.querySelector('[data-modal-inner]');
+      inner.innerHTML = `
+        <div class="text-center py-14 px-6">
+          <div class="w-16 h-16 rounded-full bg-lime mx-auto flex items-center justify-center mb-6">
+            <svg class="w-8 h-8 text-ink" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+          </div>
+          <h3 class="display text-3xl mb-3">${title}</h3>
+          <p class="opacity-70 mb-8 max-w-sm mx-auto">${message}</p>
+          <button onclick="closeModal('${modalId}')" class="ghost">Close</button>
+        </div>
+      `;
+    }
+    function fakeCheckout(e) {
+      e.preventDefault();
+      showConfirmation('modal-checkout', 'Welcome aboard.', "We're firing up your project. Check your email — your onboarding starts now.");
+    }
+    function fakeBooking(e) {
+      e.preventDefault();
+      const slot = document.querySelector('#modal-calendar .time-slot.selected');
+      const day = document.querySelector('#modal-calendar .cal-day.selected');
+      const when = (day && slot) ? `${day.dataset.label} at ${slot.textContent.trim()}` : 'your selected time';
+      showConfirmation('modal-calendar', 'Booked.', `${when}. Calendar invite is on its way.`);
+    }
+    function fakeQuote(e) {
+      e.preventDefault();
+      showConfirmation('modal-intake', 'Quote on the way.', "We'll have a tailored number in your inbox within 24 hours.");
+    }
+  </script>
+
+  <!-- ===================== MODAL: CHECKOUT (Starter) ===================== -->
+  <div class="modal-backdrop" id="modal-checkout" role="dialog" aria-modal="true">
+    <div class="modal-content max-w-[480px]">
+      <button class="modal-close" onclick="closeModal('modal-checkout')" aria-label="Close">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M6 18L18 6"/></svg>
+      </button>
+      <div data-modal-inner>
+        <div class="p-8 lg:p-10">
+          <div class="mono text-[10px] uppercase tracking-widest opacity-60 mb-3">Starter · Direct checkout</div>
+          <h3 class="display text-3xl mb-2">Start in 7 days</h3>
+          <p class="opacity-70 text-sm">Live, hosted, and on Google in a week. No contracts.</p>
+
+          <div class="mt-6 p-5 rounded-2xl bg-paper dark:bg-white/5 border border-line dark:border-white/10">
+            <div class="flex justify-between text-sm mb-2">
+              <span class="opacity-70">Setup (one-time)</span>
+              <span class="mono">$500.00</span>
+            </div>
+            <div class="flex justify-between text-sm mb-3">
+              <span class="opacity-70">Launch + Care (first month)</span>
+              <span class="mono">$149.00</span>
+            </div>
+            <div class="flex justify-between pt-3 border-t border-line dark:border-white/10">
+              <span class="font-medium">Today's total</span>
+              <span class="display text-xl">$649.00</span>
+            </div>
+            <div class="mono text-[10px] opacity-60 mt-2">Then $149/mo. Cancel anytime.</div>
+          </div>
+
+          <form onsubmit="fakeCheckout(event)" class="mt-6 space-y-3">
+            <input type="email" placeholder="Email" required class="modal-input">
+            <input type="text" placeholder="Business name" required class="modal-input">
+
+            <div class="mono text-[10px] uppercase tracking-widest opacity-50 pt-3">Payment</div>
+            <input type="text" placeholder="Card number" required class="modal-input">
+            <div class="grid grid-cols-3 gap-3">
+              <input type="text" placeholder="MM / YY" required class="modal-input">
+              <input type="text" placeholder="CVC" required class="modal-input">
+              <input type="text" placeholder="ZIP" required class="modal-input">
+            </div>
+
+            <button type="submit" class="w-full mt-4 px-6 py-3.5 rounded-full bg-ink text-paper dark:bg-lime dark:text-ink font-medium hover:opacity-90 transition flex items-center justify-center gap-2">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+              Pay $649.00 and start
+            </button>
+            <div class="mono text-[10px] opacity-50 text-center mt-2 flex items-center justify-center gap-1.5">
+              <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+              Secured by Stripe · 256-bit SSL
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== MODAL: CALENDAR (Pro) ===================== -->
+  <div class="modal-backdrop" id="modal-calendar" role="dialog" aria-modal="true">
+    <div class="modal-content max-w-[640px]">
+      <button class="modal-close" onclick="closeModal('modal-calendar')" aria-label="Close">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M6 18L18 6"/></svg>
+      </button>
+      <div data-modal-inner>
+        <div class="p-8 lg:p-10">
+          <div class="mono text-[10px] uppercase tracking-widest opacity-60 mb-3">Pro · Discovery call</div>
+          <h3 class="display text-3xl mb-1">30 min with Gabriel</h3>
+          <p class="opacity-70 text-sm">No pitch deck. We listen, then tell you within 5 min if we're a fit.</p>
+
+          <div class="grid sm:grid-cols-2 gap-6 mt-6">
+            <!-- Calendar -->
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="display text-base">May 2026</span>
+                <div class="flex gap-1">
+                  <button type="button" class="w-7 h-7 rounded-full border border-line dark:border-white/10 flex items-center justify-center hover:bg-black/5 dark:hover:bg-white/5 transition" aria-label="Previous month">
+                    <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+                  </button>
+                  <button type="button" class="w-7 h-7 rounded-full border border-line dark:border-white/10 flex items-center justify-center hover:bg-black/5 dark:hover:bg-white/5 transition" aria-label="Next month">
+                    <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+                  </button>
+                </div>
+              </div>
+              <div data-cal-grid class="grid grid-cols-7 gap-1 text-center">
+                <div class="mono text-[10px] opacity-50 py-1">M</div>
+                <div class="mono text-[10px] opacity-50 py-1">T</div>
+                <div class="mono text-[10px] opacity-50 py-1">W</div>
+                <div class="mono text-[10px] opacity-50 py-1">T</div>
+                <div class="mono text-[10px] opacity-50 py-1">F</div>
+                <div class="mono text-[10px] opacity-50 py-1">S</div>
+                <div class="mono text-[10px] opacity-50 py-1">S</div>
+                <div class="cal-day disabled">18</div>
+                <div class="cal-day disabled" data-label="May 19">19</div>
+                <div class="cal-day" data-label="Wed, May 20">20</div>
+                <div class="cal-day" data-label="Thu, May 21">21</div>
+                <div class="cal-day" data-label="Fri, May 22">22</div>
+                <div class="cal-day disabled">23</div>
+                <div class="cal-day disabled">24</div>
+                <div class="cal-day" data-label="Mon, May 25">25</div>
+                <div class="cal-day selected" data-label="Tue, May 26">26</div>
+                <div class="cal-day" data-label="Wed, May 27">27</div>
+                <div class="cal-day" data-label="Thu, May 28">28</div>
+                <div class="cal-day" data-label="Fri, May 29">29</div>
+                <div class="cal-day disabled">30</div>
+                <div class="cal-day disabled">31</div>
+              </div>
+              <div class="mono text-[10px] opacity-50 mt-3">All times · CST</div>
+            </div>
+
+            <!-- Slots -->
+            <div>
+              <div class="mono text-xs uppercase tracking-widest opacity-50 mb-3">Tue · May 26</div>
+              <div data-slot-list class="space-y-2 max-h-[260px] overflow-y-auto pr-1">
+                <button type="button" class="time-slot">9:00 AM</button>
+                <button type="button" class="time-slot">10:30 AM</button>
+                <button type="button" class="time-slot">11:30 AM</button>
+                <button type="button" class="time-slot selected">2:00 PM</button>
+                <button type="button" class="time-slot">3:00 PM</button>
+                <button type="button" class="time-slot">4:30 PM</button>
+              </div>
+            </div>
+          </div>
+
+          <form onsubmit="fakeBooking(event)" class="mt-6 space-y-3">
+            <div class="grid grid-cols-2 gap-3">
+              <input type="text" placeholder="Your name" required class="modal-input">
+              <input type="email" placeholder="Email" required class="modal-input">
+            </div>
+            <input type="text" placeholder="Business name (optional)" class="modal-input">
+            <button type="submit" class="w-full mt-2 px-6 py-3.5 rounded-full bg-ink text-paper dark:bg-lime dark:text-ink font-medium hover:opacity-90 transition flex items-center justify-center gap-2">
+              Confirm Tue, May 26 at 2:00 PM
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </button>
+            <div class="mono text-[10px] opacity-50 text-center mt-1">Calendar invite + agenda emailed within minutes</div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== MODAL: INTAKE (Signature) ===================== -->
+  <div class="modal-backdrop" id="modal-intake" role="dialog" aria-modal="true">
+    <div class="modal-content max-w-[520px]">
+      <button class="modal-close" onclick="closeModal('modal-intake')" aria-label="Close">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M6 18L18 6"/></svg>
+      </button>
+      <div data-modal-inner>
+        <div class="p-8 lg:p-10">
+          <div class="mono text-[10px] uppercase tracking-widest opacity-60 mb-3">Signature · Quote request</div>
+          <h3 class="display text-3xl mb-2">Tell us your shape.</h3>
+          <p class="opacity-70 text-sm">We'll send a tailored number within 24 hours. No sales call required.</p>
+
+          <form onsubmit="fakeQuote(event)" class="mt-6 space-y-3">
+            <input type="text" placeholder="Business name" required class="modal-input">
+
+            <select required class="modal-input">
+              <option value="" disabled selected>Business type</option>
+              <option>Restaurant</option>
+              <option>Beauty / Salon</option>
+              <option>Contractor / Trade</option>
+              <option>Auto</option>
+              <option>Medical / Dental</option>
+              <option>Realtor</option>
+              <option>Import / Export</option>
+              <option>Other</option>
+            </select>
+
+            <select required class="modal-input">
+              <option value="" disabled selected>Languages needed</option>
+              <option>English only</option>
+              <option>English + Chinese (中文)</option>
+              <option>Other (specify below)</option>
+            </select>
+
+            <select required class="modal-input">
+              <option value="" disabled selected>Where do your customers pay from?</option>
+              <option>US only</option>
+              <option>US + China (cross-border)</option>
+              <option>Other</option>
+            </select>
+
+            <div class="grid grid-cols-2 gap-3">
+              <input type="email" placeholder="Email" required class="modal-input">
+              <input type="tel" placeholder="Phone" required class="modal-input">
+            </div>
+
+            <textarea placeholder="Tell us more (optional) — current site, pain points, deadlines…" rows="3" class="modal-input"></textarea>
+
+            <button type="submit" class="w-full mt-2 px-6 py-3.5 rounded-full bg-ink text-paper dark:bg-lime dark:text-ink font-medium hover:opacity-90 transition flex items-center justify-center gap-2">
+              Send quote request
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </button>
+            <div class="mono text-[10px] opacity-50 text-center mt-1">Reply within 24 hours · No spam</div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
