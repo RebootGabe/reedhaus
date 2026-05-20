@@ -350,6 +350,20 @@
     .dark .time-slot:hover { border-color: #D9F26B; }
     .dark .time-slot.selected { background: #D9F26B; color: #0A0A0A; border-color: #D9F26B; }
     body.modal-open { overflow: hidden; }
+
+    /* Email CTA attention glow (triggered by "Book a call") */
+    @keyframes emailPulse {
+      0%   { box-shadow: 0 0 0 0 rgba(217,242,107,0.7); }
+      70%  { box-shadow: 0 0 0 14px rgba(217,242,107,0); }
+      100% { box-shadow: 0 0 0 0 rgba(217,242,107,0); }
+    }
+    #email-cta.email-glow {
+      animation: emailPulse 1.3s ease-out 5;
+      border-color: #D9F26B !important;
+      background: rgba(217,242,107,0.12) !important;
+      color: #0A0A0A;
+    }
+    .dark #email-cta.email-glow { color: #FAFAF7; }
   </style>
 </head>
 <body class="overflow-x-hidden">
@@ -912,11 +926,11 @@
         Book a 15-minute call. We'll tell you within 5 minutes if we're the right fit. No deck, no "discovery."
       </p>
       <div class="flex flex-wrap items-center justify-center gap-4 mt-10 fade-in">
-        <a href="#" class="magnetic">
+        <a href="#" onclick="event.preventDefault(); highlightEmail();" class="magnetic">
           Book a call
           <svg class="w-4 h-4 arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
-        <a href="mailto:hi@reedhaus.studio" class="ghost">
+        <a href="mailto:hi@reedhaus.studio" id="email-cta" class="ghost">
           hi@reedhaus.studio
           <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M4 4l8 8 8-8"/></svg>
         </a>
@@ -1051,6 +1065,16 @@
       });
     }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
     document.querySelectorAll('.fade-in').forEach((el) => io.observe(el));
+
+    // ===== "Book a call" → glow the email CTA instead of scrolling =====
+    function highlightEmail() {
+      const btn = document.getElementById('email-cta');
+      if (!btn) return;
+      btn.classList.remove('email-glow');
+      void btn.offsetWidth; // force reflow so the animation restarts on repeat taps
+      btn.classList.add('email-glow');
+      btn.addEventListener('animationend', () => btn.classList.remove('email-glow'), { once: true });
+    }
 
     // ===== Modals =====
     function openModal(id) {
