@@ -107,9 +107,9 @@ The site is design-complete. Before driving traffic:
 
 1. **DNS** — point `reedhaus.studio` at the Vercel project
 2. **Email** — set up `hi@reedhaus.studio` (Gmail-on-domain via Google Workspace, or Fastmail / Migadu)
-3. **Stripe** — create a Payment Link for `$649 initial + $149/mo recurring`, wire it into the Starter checkout modal in `index.html`
-4. **Cal.com / Calendly** — set up a 30-min "Discovery call" page, embed in or link from the Pro calendar modal
-5. **Supabase** — `leads` table for quote-intake submissions; wire the Signature form's `fakeQuote()` handler to an actual insert
+3. **Stripe** — create a Payment Link for `$699 initial + $199/mo recurring`, wire it into the Foundation checkout modal in `index.html`
+4. **Cal.com / Calendly** — Scale "Book a discovery call" already links to cal.com/reedhausstudio/15min
+5. **Supabase** — `leads` table for quote-intake submissions; wire the Growth quote form's `fakeQuote()` handler to an actual insert
 6. **Telegram bot** — pushed alert for every new lead / signup (matches your existing automation stack)
 7. **Terms of Service + Privacy Policy** — required by Stripe (Termly or a one-pager)
 8. **Analytics** — GA4 or Plausible
