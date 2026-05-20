@@ -318,52 +318,7 @@
       background-size: 1rem;
       padding-right: 2.5rem;
     }
-    .cal-day {
-      cursor: pointer;
-      border-radius: 0.5rem;
-      padding: 0.55rem 0;
-      transition: background 0.15s ease, color 0.15s ease;
-      font-family: 'Geist Mono', ui-monospace, monospace;
-      font-size: 0.8rem;
-    }
-    .cal-day:hover { background: rgba(10,10,10,0.06); }
-    .cal-day.selected { background: #0A0A0A; color: #FAFAF7; }
-    .cal-day.disabled { opacity: 0.25; cursor: default; pointer-events: none; }
-    .dark .cal-day:hover { background: rgba(255,255,255,0.08); }
-    .dark .cal-day.selected { background: #D9F26B; color: #0A0A0A; }
-    .time-slot {
-      width: 100%;
-      padding: 0.7rem 1rem;
-      border: 1px solid #E5E5E0;
-      border-radius: 0.75rem;
-      font-size: 0.85rem;
-      font-family: 'Geist Mono', ui-monospace, monospace;
-      transition: all 0.2s ease;
-      text-align: left;
-      background: white;
-      color: #0A0A0A;
-      cursor: pointer;
-    }
-    .time-slot:hover { border-color: #0A0A0A; }
-    .time-slot.selected { background: #0A0A0A; color: #FAFAF7; border-color: #0A0A0A; }
-    .dark .time-slot { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.1); color: #FAFAF7; }
-    .dark .time-slot:hover { border-color: #D9F26B; }
-    .dark .time-slot.selected { background: #D9F26B; color: #0A0A0A; border-color: #D9F26B; }
     body.modal-open { overflow: hidden; }
-
-    /* Email CTA attention glow (triggered by "Book a call") */
-    @keyframes emailPulse {
-      0%   { box-shadow: 0 0 0 0 rgba(217,242,107,0.7); }
-      70%  { box-shadow: 0 0 0 14px rgba(217,242,107,0); }
-      100% { box-shadow: 0 0 0 0 rgba(217,242,107,0); }
-    }
-    #email-cta.email-glow {
-      animation: emailPulse 1.3s ease-out 5;
-      border-color: #D9F26B !important;
-      background: rgba(217,242,107,0.12) !important;
-      color: #0A0A0A;
-    }
-    .dark #email-cta.email-glow { color: #FAFAF7; }
   </style>
 </head>
 <body class="overflow-x-hidden">
@@ -736,7 +691,7 @@
             <li class="price-feature"><svg class="w-4 h-4 text-lime dark:text-accentAlt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Client dashboard access</li>
             <li class="price-feature"><svg class="w-4 h-4 text-lime dark:text-accentAlt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Priority 24-hr response</li>
           </ul>
-          <a href="#" onclick="event.preventDefault(); openModal('modal-calendar');" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-lime text-ink dark:bg-ink dark:text-lime font-medium hover:opacity-90 transition">
+          <a href="https://cal.com/reedhausstudio/discovery" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-lime text-ink dark:bg-ink dark:text-lime font-medium hover:opacity-90 transition">
             Book a discovery call
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
@@ -926,7 +881,7 @@
         Book a 15-minute call. We'll tell you within 5 minutes if we're the right fit. No deck, no "discovery."
       </p>
       <div class="flex flex-wrap items-center justify-center gap-4 mt-10 fade-in">
-        <a href="#" onclick="event.preventDefault(); highlightEmail();" class="magnetic">
+        <a href="https://cal.com/reedhausstudio/discovery" target="_blank" rel="noopener" class="magnetic">
           Book a call
           <svg class="w-4 h-4 arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
@@ -1066,16 +1021,6 @@
     }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
     document.querySelectorAll('.fade-in').forEach((el) => io.observe(el));
 
-    // ===== "Book a call" → glow the email CTA instead of scrolling =====
-    function highlightEmail() {
-      const btn = document.getElementById('email-cta');
-      if (!btn) return;
-      btn.classList.remove('email-glow');
-      void btn.offsetWidth; // force reflow so the animation restarts on repeat taps
-      btn.classList.add('email-glow');
-      btn.addEventListener('animationend', () => btn.classList.remove('email-glow'), { once: true });
-    }
-
     // ===== Modals =====
     function openModal(id) {
       const m = document.getElementById(id);
@@ -1098,19 +1043,6 @@
         document.querySelectorAll('.modal-backdrop.open').forEach(el => closeModal(el.id));
       }
     });
-    // Calendar day + time slot selection (visual only)
-    document.addEventListener('click', (e) => {
-      const day = e.target.closest('.cal-day');
-      if (day && !day.classList.contains('disabled')) {
-        day.closest('[data-cal-grid]').querySelectorAll('.cal-day').forEach(d => d.classList.remove('selected'));
-        day.classList.add('selected');
-      }
-      const slot = e.target.closest('.time-slot');
-      if (slot) {
-        slot.closest('[data-slot-list]').querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
-        slot.classList.add('selected');
-      }
-    });
     // Form submissions → confirmation state
     function showConfirmation(modalId, title, message) {
       const modal = document.getElementById(modalId);
@@ -1129,13 +1061,6 @@
     function fakeCheckout(e) {
       e.preventDefault();
       showConfirmation('modal-checkout', 'Welcome aboard.', "We're firing up your project. Check your email — your onboarding starts now.");
-    }
-    function fakeBooking(e) {
-      e.preventDefault();
-      const slot = document.querySelector('#modal-calendar .time-slot.selected');
-      const day = document.querySelector('#modal-calendar .cal-day.selected');
-      const when = (day && slot) ? `${day.dataset.label} at ${slot.textContent.trim()}` : 'your selected time';
-      showConfirmation('modal-calendar', 'Booked.', `${when}. Calendar invite is on its way.`);
     }
     function fakeQuote(e) {
       e.preventDefault();
@@ -1191,89 +1116,6 @@
               <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
               Secured by Stripe · 256-bit SSL
             </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ===================== MODAL: CALENDAR (Pro) ===================== -->
-  <div class="modal-backdrop" id="modal-calendar" role="dialog" aria-modal="true">
-    <div class="modal-content max-w-[640px]">
-      <button class="modal-close" onclick="closeModal('modal-calendar')" aria-label="Close">
-        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M6 18L18 6"/></svg>
-      </button>
-      <div data-modal-inner>
-        <div class="p-8 lg:p-10">
-          <div class="mono text-[10px] uppercase tracking-widest opacity-60 mb-3">Pro · Discovery call</div>
-          <h3 class="display text-3xl mb-1">30 min with Gabriel</h3>
-          <p class="opacity-70 text-sm">No pitch deck. We listen, then tell you within 5 min if we're a fit.</p>
-
-          <div class="grid sm:grid-cols-2 gap-6 mt-6">
-            <!-- Calendar -->
-            <div>
-              <div class="flex items-center justify-between mb-3">
-                <span class="display text-base">May 2026</span>
-                <div class="flex gap-1">
-                  <button type="button" class="w-7 h-7 rounded-full border border-line dark:border-white/10 flex items-center justify-center hover:bg-black/5 dark:hover:bg-white/5 transition" aria-label="Previous month">
-                    <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
-                  </button>
-                  <button type="button" class="w-7 h-7 rounded-full border border-line dark:border-white/10 flex items-center justify-center hover:bg-black/5 dark:hover:bg-white/5 transition" aria-label="Next month">
-                    <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-                  </button>
-                </div>
-              </div>
-              <div data-cal-grid class="grid grid-cols-7 gap-1 text-center">
-                <div class="mono text-[10px] opacity-50 py-1">M</div>
-                <div class="mono text-[10px] opacity-50 py-1">T</div>
-                <div class="mono text-[10px] opacity-50 py-1">W</div>
-                <div class="mono text-[10px] opacity-50 py-1">T</div>
-                <div class="mono text-[10px] opacity-50 py-1">F</div>
-                <div class="mono text-[10px] opacity-50 py-1">S</div>
-                <div class="mono text-[10px] opacity-50 py-1">S</div>
-                <div class="cal-day disabled">18</div>
-                <div class="cal-day disabled" data-label="May 19">19</div>
-                <div class="cal-day" data-label="Wed, May 20">20</div>
-                <div class="cal-day" data-label="Thu, May 21">21</div>
-                <div class="cal-day" data-label="Fri, May 22">22</div>
-                <div class="cal-day disabled">23</div>
-                <div class="cal-day disabled">24</div>
-                <div class="cal-day" data-label="Mon, May 25">25</div>
-                <div class="cal-day selected" data-label="Tue, May 26">26</div>
-                <div class="cal-day" data-label="Wed, May 27">27</div>
-                <div class="cal-day" data-label="Thu, May 28">28</div>
-                <div class="cal-day" data-label="Fri, May 29">29</div>
-                <div class="cal-day disabled">30</div>
-                <div class="cal-day disabled">31</div>
-              </div>
-              <div class="mono text-[10px] opacity-50 mt-3">All times · CST</div>
-            </div>
-
-            <!-- Slots -->
-            <div>
-              <div class="mono text-xs uppercase tracking-widest opacity-50 mb-3">Tue · May 26</div>
-              <div data-slot-list class="space-y-2 max-h-[260px] overflow-y-auto pr-1">
-                <button type="button" class="time-slot">9:00 AM</button>
-                <button type="button" class="time-slot">10:30 AM</button>
-                <button type="button" class="time-slot">11:30 AM</button>
-                <button type="button" class="time-slot selected">2:00 PM</button>
-                <button type="button" class="time-slot">3:00 PM</button>
-                <button type="button" class="time-slot">4:30 PM</button>
-              </div>
-            </div>
-          </div>
-
-          <form onsubmit="fakeBooking(event)" class="mt-6 space-y-3">
-            <div class="grid grid-cols-2 gap-3">
-              <input type="text" placeholder="Your name" required class="modal-input">
-              <input type="email" placeholder="Email" required class="modal-input">
-            </div>
-            <input type="text" placeholder="Business name (optional)" class="modal-input">
-            <button type="submit" class="w-full mt-2 px-6 py-3.5 rounded-full bg-ink text-paper dark:bg-lime dark:text-ink font-medium hover:opacity-90 transition flex items-center justify-center gap-2">
-              Confirm Tue, May 26 at 2:00 PM
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </button>
-            <div class="mono text-[10px] opacity-50 text-center mt-1">Calendar invite + agenda emailed within minutes</div>
           </form>
         </div>
       </div>
